@@ -1,0 +1,27 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+openai = "*"
+fastapi = "*"
+black = "*"
+isort = "*"
+websockets = "*"
+pydantic = "*"
+langchain = "*"
+uvicorn = "*"
+jinja2 = "*"
+faiss-cpu = "*"
+bs4 = "*"
+unstructured = "*"
+libmagic = "*"
+tiktoken = "*"
+kor = "*"
+pyspellchecker = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"

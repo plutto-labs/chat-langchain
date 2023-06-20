@@ -19,6 +19,7 @@ vectorstore: Optional[VectorStore] = None
 
 @app.on_event("startup")
 async def startup_event():
+    """Load the vectorstore."""
     logging.info("loading vectorstore")
     if not Path("vectorstore.pkl").exists():
         raise ValueError("vectorstore.pkl does not exist, please run ingest.py first")
@@ -29,11 +30,13 @@ async def startup_event():
 
 @app.get("/")
 async def get(request: Request):
+    """Serve the index page."""
     return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.websocket("/chat")
 async def websocket_endpoint(websocket: WebSocket):
+    """Websocket endpoint for chat."""
     await websocket.accept()
     question_handler = QuestionGenCallbackHandler(websocket)
     stream_handler = StreamingLLMCallbackHandler(websocket)
@@ -64,8 +67,8 @@ async def websocket_endpoint(websocket: WebSocket):
         except WebSocketDisconnect:
             logging.info("websocket disconnect")
             break
-        except Exception as e:
-            logging.error(e)
+        except Exception as err:
+            logging.error(err)
             resp = ChatResponse(
                 sender="bot",
                 message="Sorry, something went wrong. Try again.",
